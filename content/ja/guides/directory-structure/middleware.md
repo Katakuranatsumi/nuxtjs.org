@@ -142,6 +142,7 @@ export default function ({ store, redirect }) {
 <template>
   <h1>Secret page</h1>
 </template>
+
 <script>
   export default {
     middleware: 'authenticated'
@@ -157,6 +158,10 @@ export default function ({ store, redirect }) {
 <template>
   <h1>Secret page</h1>
 </template>
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/main
 <script>
   export default {
     middleware({ store, redirect }) {
