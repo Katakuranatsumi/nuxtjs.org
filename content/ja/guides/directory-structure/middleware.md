@@ -1,6 +1,6 @@
 ---
 title: ミドルウェア
-description: `middleware` ディレクトリには、アプリケーションミドルウェアが含まれています。ミドルウェアを使用すると、ページまたはページのグループ（レイアウト）をレンダリングする前に実行できる、カスタム関数を定義できます。
+description: middleware ディレクトリには、アプリケーションミドルウェアが含まれています。ミドルウェアを使用すると、ページまたはページのグループ（レイアウト）をレンダリングする前に実行できる、カスタム関数を定義できます。
 position: 8
 category: directory-structure
 csb_link_anonymous: https://codesandbox.io/embed/github/nuxt-academy/guides-examples/tree/master/04_directory_structure/09_middleware_anonymous?fontsize=14&hidenavigation=1&theme=dark
@@ -31,7 +31,7 @@ questions:
       - 最初のリクエストではクライアント側、ナビゲートする時もクライアント側
       - 最初のリクエストではサーバ側、ナビゲートする時はクライアント側
     correctAnswer: 最初のリクエストではサーバ側、ナビゲートする時はクライアント側
-  - question: ミドルウェアが呼び出されるときにSSRがfalseに設定されている場合は？
+  - question: ミドルウェアが呼び出されるときに SSR が false に設定されている場合は？
     answers:
       - 最初のリクエストではサーバ側、ナビゲートする時はサーバ側
       - 最初のリクエストではクライアント側、ナビゲートする時もクライアント側
@@ -70,7 +70,7 @@ questions:
 
 `middleware` ディレクトリには、アプリケーションミドルウェアが含まれています。ミドルウェアを使用すると、ページまたはページのグループ（レイアウト）をレンダリングする前に実行できる、カスタム関数を定義できます。
 
-共有ミドルウェアは、 `middleware/` ディレクトリに配置する必要があります。ファイル名はミドルウェアの名前になります（ `middleware/auth.js` は  `auth` ミドルウェアになります）。関数を直接使用して、ページ固有のミドルウェアを定義することもできます。
+共有ミドルウェアは、`middleware/` ディレクトリに配置する必要があります。ファイル名はミドルウェアの名前になります（`middleware/auth.js` は `auth` ミドルウェアになります）。関数を直接使用して、ページ固有のミドルウェアを定義することもできます。
 [匿名のミドルウェア](/docs/2.x/components-glossary/pages-middleware#anonymous-middleware)を参照してください。
 
 ミドルウェアは最初の引数として[コンテキスト](/docs/2.x/internals-glossary/context)を受け取ります。
@@ -88,16 +88,17 @@ export default function (context) {
 
 ミドルウェアは以下の順序で連続して実行されます:
 
-1. `nuxt.config.js` (ファイル内の順序)
+1. `nuxt.config.js`（ファイル内の順序）
 2. マッチしたレイアウト
 3. マッチしたページ
 
 ## ルーターミドルウェア
 
-ミドルウェアは非同期にすることができます。これを行うには `Promise` を返すか、async/awaitを使用します。
+ミドルウェアは非同期にすることができます。これを行うには `Promise` を返すか、async/await を使用します。
 
 ```js{}[middleware/stats.js]
 import http from 'http'
+
 export default function ({ route }) {
   return http.post('http://my-stats-api.com', {
     url: route.fullPath
@@ -105,7 +106,7 @@ export default function ({ route }) {
 }
 ```
 
-次に、 `nuxt.config.js` で、`router.middleware` キーを使用します。
+次に、`nuxt.config.js` で、`router.middleware` キーを使用します。
 
 ```js{}[nuxt.config.js]
 export default {
@@ -117,7 +118,7 @@ export default {
 
 これで、ルートが変更されるたびに `stats` ミドルウェアが呼び出されます。
 
-ミドルウェア(複数でも) を特定のレイアウト、またはページに追加することもできます。
+ミドルウェア（複数でも）を特定のレイアウト、またはページに追加することもできます。
 
 ```js{}[pages/index.vue / layouts/default.vue]
 export default {
@@ -131,7 +132,7 @@ export default {
 
 ```js{}[middleware/authenticated.js]
 export default function ({ store, redirect }) {
-  // ユーザが認証されていない場合
+  // ユーザーが認証されていない場合
   if (!store.state.authenticated) {
     return redirect('/login')
   }
@@ -142,6 +143,7 @@ export default function ({ store, redirect }) {
 <template>
   <h1>Secret page</h1>
 </template>
+
 <script>
   export default {
     middleware: 'authenticated'
@@ -151,12 +153,13 @@ export default function ({ store, redirect }) {
 
 ## 匿名のミドルウェア
 
-特定のページにのみミドルウェアを使用する必要がある場合は、そのミドルウェアの関数 (または関数の配列)を直接使用できます:
+特定のページにのみミドルウェアを使用する必要がある場合は、そのミドルウェアの関数（または関数の配列）を直接使用できます:
 
 ```html{}[pages/secret.vue]
 <template>
   <h1>Secret page</h1>
 </template>
+
 <script>
   export default {
     middleware({ store, redirect }) {
